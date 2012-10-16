@@ -8,7 +8,7 @@ class RomanParser
 	
 
 	def to_arabic(roman)
-		@regex = /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/
+		@regex = /^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/
 		
 		raise EmptyRomanNumberException, 'Argument is empty' if roman.empty?
 		raise InvalidRomanNumberException, 'Argument is invalid' if @regex.match(roman).nil?
@@ -110,7 +110,43 @@ describe RomanParser, "#to_arabic" do
 		@parser.to_arabic("IX").should eq 9
 	end
 
-	it "return"
+	it "return 40 when input is XL" do
+		@parser.to_arabic("XL").should eq 40
+	end
+
+	it "return 90 when input is XC" do
+		@parser.to_arabic("XC").should eq 90
+	end	
+
+	it "return 400 when input is CD" do
+		@parser.to_arabic("CD").should eq 400
+	end
+
+	it "return 900 when input is CM" do
+		@parser.to_arabic("CM").should eq 900
+	end
+
+	it "return 1954 when input is MCMLIV" do
+		@parser.to_arabic("MCMLIV").should eq 1954
+	end
+
+	it "return 2006 when input is MMVI" do
+		@parser.to_arabic("MMVI").should eq 2006
+	end
+
+	it "return 3999 when input is MMMCMXCIX" do
+		@parser.to_arabic("MMMCMXCIX").should eq 3999
+	end
+
+	it "return exception when input is MMMM" do
+		expect{@parser.to_arabic("MMMM")}.to raise_error(InvalidRomanNumberException, 'Argument is invalid')
+	end
+
+	it "return exception when input is IL" do
+		expect{@parser.to_arabic("IL")}.to raise_error(InvalidRomanNumberException, 'Argument is invalid')
+	end
+
+
 end
 
 

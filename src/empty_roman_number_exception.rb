@@ -1,0 +1,2 @@
+class EmptyRomanNumberException < Exception
+end

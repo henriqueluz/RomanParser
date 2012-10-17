@@ -1,5 +1,4 @@
-class EmptyRomanNumberException < Exception
-end
+require "../src/empty_roman_number_exception.rb"
 
 class InvalidRomanNumberException < Exception
 end
